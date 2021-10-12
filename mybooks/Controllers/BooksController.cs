@@ -42,5 +42,20 @@ namespace mybooks.Controllers
 
         }
 
+
+        [HttpGet("get-all-book")]
+        public IActionResult GetAllBooks() {
+            var allBooks = _booksService.GetAllBooks();
+            return Ok(allBooks);
+        }
+
+        //It is best practiceto write id in {}
+        [HttpGet("get-book-by-id/{id}")]
+        public IActionResult GetBookById(int id)
+        {
+            var book = _booksService.GetBookById(id);
+            return Ok(book);
+        }
+
     }
 }

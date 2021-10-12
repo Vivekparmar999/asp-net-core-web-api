@@ -42,6 +42,13 @@ namespace mybooks.Data.Services
             _context.SaveChanges();
 
         }
+
+        //It Will fetch all books from AppDbContext in Books Table in form of List
+        public List<Book> GetAllBooks() => _context.Books.ToList();
+
+        //Here n is parameter of book & it will check both are equal
+        public Book GetBookById(int bookId) => _context.Books.FirstOrDefault(n => n.Id == bookId);
+
     }
 
 }
