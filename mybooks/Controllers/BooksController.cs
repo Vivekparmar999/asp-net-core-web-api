@@ -57,5 +57,16 @@ namespace mybooks.Controllers
             return Ok(book);
         }
 
+
+        [HttpPut("update-book-by-id/{id}")]
+
+        //Parameter id & Request Body
+        public IActionResult UpdateBookById(int id, [FromBody] BookVM bookVM)
+        {
+            var updateBook = _booksService.UpdateBookById(id, bookVM);
+            return Ok(updateBook);
+        }
+
     }
 }
+//204 Server Code: There is no content to send in the response payload body.
