@@ -74,6 +74,19 @@ namespace mybooks.Data.Services
             return _book;
         }
 
+
+        //Delete the Book
+        public void DeleteBookById(int bookId)
+        {
+            var _book = _context.Books.FirstOrDefault(n => n.Id == bookId);
+            if (_book != null) {
+
+                //Remove Query from Table
+                _context.Books.Remove(_book);
+                _context.SaveChanges();
+            }
+        }
+
     }
 
 }
