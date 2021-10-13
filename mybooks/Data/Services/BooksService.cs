@@ -49,6 +49,31 @@ namespace mybooks.Data.Services
         //Here n is parameter of book & it will check both are equal
         public Book GetBookById(int bookId) => _context.Books.FirstOrDefault(n => n.Id == bookId);
 
+
+        //Update the Book
+        public Book UpdateBookById(int bookId, BookVM bookVM)
+        {
+
+            //check if book exist or not in Database
+            var _book = _context.Books.FirstOrDefault(n => n.Id == bookId);
+
+            if (_book != null)
+            {
+
+                _book.Title = bookVM.Title;
+                _book.Description = bookVM.Description;
+                _book.Isread = bookVM.Isread;
+                _book.DateRead = bookVM.Isread ? bookVM.DateRead.Value : null;
+                _book.Genre = bookVM.Genre;
+                _book.Author = bookVM.Author;
+                _book.CoverUrl = bookVM.CoverUrl;
+
+                _context.SaveChanges();
+            }
+
+            return _book;
+        }
+
     }
 
 }
