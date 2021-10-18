@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace mybooks.Exceptions
+namespace mybooks.Excep
 {
-    public class PublisherNameException: Exception
+    [Serializable]
+    public class PublisherNameException:Exception
     {
         public string PublisherName { get; set; }
 

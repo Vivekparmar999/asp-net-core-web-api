@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using mybooks.Data.Services;
 using mybooks.Data.ViewModels;
-using mybooks.Exceptions;
+using mybooks.Excep;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +25,6 @@ namespace mybooks.Controllers
         [HttpPost("add-publisher")]
         public IActionResult AddPublishers([FromBody] PublisherVM publisherVM) 
         {
-
             try
             {
 
@@ -52,7 +51,11 @@ namespace mybooks.Controllers
         public IActionResult GetPublisherById(int id) 
         {
 
-            try {
+            throw new System.Exception("This exception handled by middleWare");
+
+
+            try
+            {
 
                 var _response = _publisshersService.GetPublisherById(id);
 
