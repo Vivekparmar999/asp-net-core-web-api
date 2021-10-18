@@ -17,7 +17,7 @@ namespace mybooks.Data.Services
 
         //Adding Method that Data to Database
 
-        public void AddPublisher(PublisherVM publisherVM)
+        public Publisher AddPublisher(PublisherVM publisherVM)
         {
             var _publisher = new Publisher()
             {
@@ -25,7 +25,11 @@ namespace mybooks.Data.Services
             };
             _context.Publishers.Add(_publisher);
             _context.SaveChanges();
+
+            return _publisher;
         }
+
+        public Publisher GetPublisherById(int id) => _context.Publishers.FirstOrDefault(n => n.Id == id);
 
         public PublisherwithBooksandAuthorsVM GetPublisherData(int publisherId) 
         {

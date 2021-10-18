@@ -20,11 +20,31 @@ namespace mybooks.Controllers
             _publisshersService = publisshersService;
         }
 
+        //Status Code Post - Created- 201
         [HttpPost("add-publisher")]
         public IActionResult AddPublishers([FromBody] PublisherVM publisherVM) 
         {
-            _publisshersService.AddPublisher(publisherVM);
-            return Ok();
+            //From Controller _publisher will return
+            var newPublisher = _publisshersService.AddPublisher(publisherVM);
+           
+            //Created (nameof(MethodName) ,ObjectValue )
+            return Created(nameof(AddPublishers),newPublisher);
+        }
+
+
+        [HttpGet("get-publisher-by-id/{id}")]
+
+        public IActionResult GetPublisherById(int id) 
+        {
+            var _response = _publisshersService.GetPublisherById(id);
+
+            if (_response != null)
+            {
+                return Ok(_response);
+            }
+            else {
+                return NotFound();
+            }
         }
 
 
