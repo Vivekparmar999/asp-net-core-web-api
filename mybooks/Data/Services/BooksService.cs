@@ -59,7 +59,23 @@ namespace mybooks.Data.Services
         public List<Book> GetAllBooks() => _context.Books.ToList();
 
         //Here n is parameter of book & it will check both are equal
-        public Book GetBookById(int bookId) => _context.Books.FirstOrDefault(n => n.Id == bookId);
+        public BookwithAuthorsVM GetBookById(int bookId) {
+
+
+            var _bookwithAuthors = _context.Books.Where(n => n.Id == bookId).Select(bookVM=> new BookwithAuthorsVM() {
+              
+                Title = bookVM.Title,
+                Description = bookVM.Description,
+                Isread = bookVM.Isread,
+                DateRead = bookVM.Isread ? bookVM.DateRead.Value : null,
+                Genre = bookVM.Genre,
+                CoverUrl = bookVM.CoverUrl,
+                 PublisherName = bookVM.Publisher.Name,
+                 AuthorNames = bookVM.Book_Authors.Select(n => n.Author.FullName).ToList()
+            }).FirstOrDefault();
+
+            return _bookwithAuthors;
+        }
 
 
         //Update the Book

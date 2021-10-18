@@ -35,4 +35,30 @@ namespace mybooks.Data.ViewModels
 
 
     }
+
+    public class BookwithAuthorsVM
+    {
+
+        public string Title { get; set; }
+
+        public string Description { get; set; }
+
+        public bool Isread { get; set; }
+
+        //By typing ? it becomes Optional
+        public DateTime? DateRead { get; set; }
+
+        public int? Rate { get; set; }
+
+        public string Genre { get; set; }
+
+
+        public string CoverUrl { get; set; }
+
+        //
+        public string PublisherName { get; set; }
+
+        //book can have more than one Author so List
+        public List<string> AuthorNames { get; set; }
+    }
 }
