@@ -24,9 +24,15 @@ namespace mybooks.Data.ViewModels
 
         public string Genre { get; set; }
 
-        public string Author { get; set; }
 
         public string CoverUrl { get; set; }
+
+        //
+        public int publisherId { get; set; }
+
+        //book can have more than one Author so List
+        public List<int> AuthorsIds { get; set; }
+
 
     }
 }

@@ -17,7 +17,7 @@ namespace mybooks.Data.Services
             _context = context;
         }
 
-        public void AddBook(BookVM bookVM)
+        public void AddBookWithAuthors(BookVM bookVM)
         {
             //passing BookVM Data to _book (Book Class)
             var _book = new Book()
@@ -30,18 +30,30 @@ namespace mybooks.Data.Services
                 //IF its not null then its value or null
                 DateRead = bookVM.Isread ? bookVM.DateRead.Value:null,
                 Genre = bookVM.Genre,
-                Author = bookVM.Author,
                 CoverUrl = bookVM.CoverUrl,
                 //Here we assign current time
                 DateAdded = DateTime.Now,
-
+                PublisherId = bookVM.publisherId
             };
 
             //In AppDbContext it will add in Books Table.
             _context.Books.Add(_book);
             _context.SaveChanges();
 
-        }
+            //We will add rel of book <---> bookAuthor to author table
+
+            foreach (var id in bookVM.AuthorsIds) {
+                var _book_author = new Book_Author()
+                {
+
+                    BookId = _book.Id,
+                    AuthorId = id
+                };
+
+                _context.BookAuthors.Add(_book_author);
+                _context.SaveChanges();
+            }
+         }
 
         //It Will fetch all books from AppDbContext in Books Table in form of List
         public List<Book> GetAllBooks() => _context.Books.ToList();
@@ -65,7 +77,7 @@ namespace mybooks.Data.Services
                 _book.Isread = bookVM.Isread;
                 _book.DateRead = bookVM.Isread ? bookVM.DateRead.Value : null;
                 _book.Genre = bookVM.Genre;
-                _book.Author = bookVM.Author;
+               //_book.Author = bookVM.Author;
                 _book.CoverUrl = bookVM.CoverUrl;
 
                 _context.SaveChanges();

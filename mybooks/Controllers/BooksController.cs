@@ -32,12 +32,12 @@ namespace mybooks.Controllers
 
         //Custom EndPoint
         //    /api/Books/add-book
-        [HttpPost("add-book")]
+        [HttpPost("add-book-with-authors")]
 
-        public IActionResult AddBook([FromBody] BookVM bookVM) 
+        public IActionResult AddBookWithAuthors([FromBody] BookVM bookVM) 
         {
             //Adding bookViewModel to BookService.
-            _booksService.AddBook(bookVM);
+            _booksService.AddBookWithAuthors(bookVM);
             return Ok();
 
         }
