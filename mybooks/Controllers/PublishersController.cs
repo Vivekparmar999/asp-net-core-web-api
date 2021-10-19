@@ -44,122 +44,45 @@ namespace mybooks.Controllers
             }
             catch (Exception e) { return BadRequest(e.Message); }
 
-
-
         }
 
 
+        //Status Code get - 404 or 200
+        [HttpGet("get-publisher-by-id/{id}")]
 
-        //Specific Return  -  Data 
-        [HttpGet("get-publisher-by-id-specific-action-return/{id}")]
-
-        public Publisher GetPublisherByIdSpecificActionReturn(int id)
+        public IActionResult GetPublisherById(int id)
         {
-
-            var _response = _publisshersService.GetPublisherById(id);
-
-            if (_response != null)
-            {
-
-                return _response;
-            }
-            else
-            {
-
-                return null;
-            }
-        }
-
-
-        //IActionResult -- Return only statusCode
-        [HttpGet("get-publisher-by-id-IActionResult/{id}")]
-
-        public IActionResult GetPublisherByIdIActionReturn(int id)
-        {
-
-
             try
             {
 
                 var _response = _publisshersService.GetPublisherById(id);
-
                 if (_response != null)
                 {
                     return Ok(_response);
-
                 }
                 else
                 {
                     return NotFound();
-
                 }
-
-
             }
             catch (Exception e) { return BadRequest(e.Message); }
-
         }
 
-
-        //ActionResult<Type>  --  Return any stausCode or Data
-        [HttpGet("get-publisher-by-id-ActionResult/{id}")]
-
-        public ActionResult<Publisher> GetPublisherByIdActionReturn(int id)
+        // Sorting , Filtering , paging
+        
+        //sorting ?sortBy=name_desc
+        //Filtering ?searchString=pub
+        //paging  ?pageNUmber=2
+        [HttpGet("get-all-publishers")]
+        public IActionResult GetAllPublishers(string sortBy, string searchString, int pageNUmber) 
         {
-
-
-            try
-            {
-
-                var _response = _publisshersService.GetPublisherById(id);
-
-                if (_response != null)
-                {
-                    return _response;
-
-                }
-                else
-                {
-                    return NotFound();
-
-                }
-
-
-            }
-            catch (Exception e) { return BadRequest(e.Message); }
-
-        }
-
-
-        //CustomActionResult
-
-        [HttpGet("get-publisher-by-id-CustomActionResult/{id}")]
-
-        public CustomActionResult GetPublisherByIdCustomActionReturn(int id)
-        {
-
-            var _response = _publisshersService.GetPublisherById(id);
-
-            if (_response != null)
-            {
-                var _responseObj = new CustomActionResultVM()
-                {
-                    Publisher = _response
-                };
-
-                return new CustomActionResult(_responseObj);
-            }
-            else
-            {
-
-                var _responseObj = new CustomActionResultVM()
-                {
-                    Exception = new Exception("This is coming from publisher custom controller")
-                };
-
-                return new CustomActionResult(_responseObj);
-
-            }
+            try {
+                var _result = _publisshersService.GetAllPublishers(sortBy,searchString,pageNUmber);
+                return Ok(_result);
+            } 
+            catch (Exception e) {
+                return BadRequest("Sorry, we could not load the publisher");
+            }     
         }
 
 
