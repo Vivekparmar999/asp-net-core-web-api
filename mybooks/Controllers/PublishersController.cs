@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using mybooks.ActionResults;
+using mybooks.Data.Models;
 using mybooks.Data.Services;
 using mybooks.Data.ViewModels;
 using mybooks.Excep;
@@ -17,13 +19,14 @@ namespace mybooks.Controllers
         //Inject authorService
         private PublisshersService _publisshersService;
 
-        public PublishersController(PublisshersService publisshersService) {
+        public PublishersController(PublisshersService publisshersService)
+        {
             _publisshersService = publisshersService;
         }
 
         //Status Code Post - Created- 201
         [HttpPost("add-publisher")]
-        public IActionResult AddPublishers([FromBody] PublisherVM publisherVM) 
+        public IActionResult AddPublishers([FromBody] PublisherVM publisherVM)
         {
             try
             {
@@ -35,7 +38,8 @@ namespace mybooks.Controllers
                 return Created(nameof(AddPublishers), newPublisher);
 
             }
-            catch (PublisherNameException e) {
+            catch (PublisherNameException e)
+            {
                 return BadRequest($"{e.Message}, Publisher Name: {e.PublisherName}");
             }
             catch (Exception e) { return BadRequest(e.Message); }
@@ -45,13 +49,33 @@ namespace mybooks.Controllers
         }
 
 
-        //Status Code get - 404 or 200
-        [HttpGet("get-publisher-by-id/{id}")]
 
-        public IActionResult GetPublisherById(int id) 
+        //Specific Return  -  Data 
+        [HttpGet("get-publisher-by-id-specific-action-return/{id}")]
+
+        public Publisher GetPublisherByIdSpecificActionReturn(int id)
         {
 
-            throw new System.Exception("This exception handled by middleWare");
+            var _response = _publisshersService.GetPublisherById(id);
+
+            if (_response != null)
+            {
+
+                return _response;
+            }
+            else
+            {
+
+                return null;
+            }
+        }
+
+
+        //IActionResult -- Return only statusCode
+        [HttpGet("get-publisher-by-id-IActionResult/{id}")]
+
+        public IActionResult GetPublisherByIdIActionReturn(int id)
+        {
 
 
             try
@@ -62,14 +86,80 @@ namespace mybooks.Controllers
                 if (_response != null)
                 {
                     return Ok(_response);
+
                 }
                 else
                 {
                     return NotFound();
+
                 }
+
 
             }
             catch (Exception e) { return BadRequest(e.Message); }
+
+        }
+
+
+        //ActionResult<Type>  --  Return any stausCode or Data
+        [HttpGet("get-publisher-by-id-ActionResult/{id}")]
+
+        public ActionResult<Publisher> GetPublisherByIdActionReturn(int id)
+        {
+
+
+            try
+            {
+
+                var _response = _publisshersService.GetPublisherById(id);
+
+                if (_response != null)
+                {
+                    return _response;
+
+                }
+                else
+                {
+                    return NotFound();
+
+                }
+
+
+            }
+            catch (Exception e) { return BadRequest(e.Message); }
+
+        }
+
+
+        //CustomActionResult
+
+        [HttpGet("get-publisher-by-id-CustomActionResult/{id}")]
+
+        public CustomActionResult GetPublisherByIdCustomActionReturn(int id)
+        {
+
+            var _response = _publisshersService.GetPublisherById(id);
+
+            if (_response != null)
+            {
+                var _responseObj = new CustomActionResultVM()
+                {
+                    Publisher = _response
+                };
+
+                return new CustomActionResult(_responseObj);
+            }
+            else
+            {
+
+                var _responseObj = new CustomActionResultVM()
+                {
+                    Exception = new Exception("This is coming from publisher custom controller")
+                };
+
+                return new CustomActionResult(_responseObj);
+
+            }
         }
 
 
@@ -77,19 +167,20 @@ namespace mybooks.Controllers
 
         public IActionResult GetPublisherData(int id)
         {
-            try {
+            try
+            {
 
                 var _reponse = _publisshersService.GetPublisherData(id);
                 return Ok(_reponse);
 
             }
-            catch(Exception e) { return BadRequest(e.Message); }
+            catch (Exception e) { return BadRequest(e.Message); }
 
         }
 
 
         [HttpDelete("delete-publisher-by-id/{id}")]
-        public IActionResult DeletePublisherById(int id) 
+        public IActionResult DeletePublisherById(int id)
         {
 
             try
@@ -101,7 +192,7 @@ namespace mybooks.Controllers
             {
                 return BadRequest(e.Message);
             }
-            
+
         }
     }
 }
