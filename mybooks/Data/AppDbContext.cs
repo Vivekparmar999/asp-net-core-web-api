@@ -28,6 +28,8 @@ namespace mybooks
                 .HasOne(b => b.Author)
                 .WithMany(ba => ba.Book_Authors)
                 .HasForeignKey(bi => bi.AuthorId);
+
+            modelBuilder.Entity<Log>().HasKey(n => n.Id);
         }
 
         // 3 adding Sql Table named Props
@@ -41,5 +43,7 @@ namespace mybooks
 
         // 4 appsetting.json
         // 5 startup.cs
+
+        public DbSet<Log> Logs { get; set; }
     }
 }

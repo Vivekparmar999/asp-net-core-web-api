@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
+using Microsoft.Extensions.Logging;
 using mybooks.Data.ViewModels;
 using mybooks.Execp;
 using System;
@@ -14,7 +15,7 @@ namespace mybooks.Excep
     public static class ExceptionMiddlewareExtensions
     {
 
-        public static void ConfigureBuildInExceptionHandler(this IApplicationBuilder app)
+        public static void ConfigureBuildInExceptionHandler(this IApplicationBuilder app,ILoggerFactory loggerFactory)
         {
             app.UseExceptionHandler(
 
@@ -22,6 +23,7 @@ namespace mybooks.Excep
                     async context =>
                     {
 
+                        var loggger = loggerFactory.CreateLogger("ConfigureBuildInExceptionHandler");
                         context.Response.StatusCode = (int)System.Net.HttpStatusCode.InternalServerError;
                         context.Response.ContentType = "application/json";
 
@@ -31,14 +33,16 @@ namespace mybooks.Excep
                         if (contextFeature != null)
                         {
 
-                            await context.Response.WriteAsync(new ErrorVM()
-                            {
-
+                            var errorVMString = new ErrorVM() {
                                 StatusCode = context.Response.StatusCode,
                                 Message = contextFeature.Error.Message,
                                 Path = contextRequest.Path
 
-                            }.ToString());
+                            }.ToString();
+
+                            loggger.LogError(errorVMString);
+
+                            await context.Response.WriteAsync(errorVMString);
 
                         }
 
