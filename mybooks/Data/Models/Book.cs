@@ -30,8 +30,11 @@ namespace mybooks.Data.Models
 
 
         //Navigation Properties
+        //Rel between book & Publisher      Foreign Key,Publisher
         public int PublisherId { get; set; }
         public Publisher Publisher { get; set; }
+
+        //Rel bet Book <---book author---> author  List<BookAuthors>
         public List<Book_Author> Book_Authors { get; set; }
 
     }

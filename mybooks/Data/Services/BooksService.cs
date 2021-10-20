@@ -17,8 +17,11 @@ namespace mybooks.Data.Services
             _context = context;
         }
 
+        //BookVM : Data of book , pub id, List<aut id>
         public void AddBookWithAuthors(BookVM bookVM)
         {
+            //1 add all book data
+
             //passing BookVM Data to _book (Book Class)
             var _book = new Book()
             {
@@ -40,8 +43,9 @@ namespace mybooks.Data.Services
             _context.Books.Add(_book);
             _context.SaveChanges();
 
-            //We will add rel of book <---> bookAuthor to author table
+            //2 add rel of book <--- bookAuthor---> author
 
+            //Only Remaining is List<aut id>
             foreach (var id in bookVM.AuthorsIds) {
                 var _book_author = new Book_Author()
                 {
@@ -61,7 +65,10 @@ namespace mybooks.Data.Services
         //Here n is parameter of book & it will check both are equal
         public BookwithAuthorsVM GetBookById(int bookId) {
 
-
+            //BookwithAuthorsVM : Data of book , pubName, List<authors>
+            //where(id == bookId) ==> select * from Books(id == bookId)  return Book
+            //That book pass in select
+            //So we get all book info and pubId
             var _bookwithAuthors = _context.Books.Where(n => n.Id == bookId).Select(bookVM=> new BookwithAuthorsVM() {
               
                 Title = bookVM.Title,
@@ -70,7 +77,9 @@ namespace mybooks.Data.Services
                 DateRead = bookVM.Isread ? bookVM.DateRead.Value : null,
                 Genre = bookVM.Genre,
                 CoverUrl = bookVM.CoverUrl,
+                //Map automatically  book<--publisher--->Name
                  PublisherName = bookVM.Publisher.Name,
+                 //book.List<bookAuthor.Author.Name>
                  AuthorNames = bookVM.Book_Authors.Select(n => n.Author.FullName).ToList()
             }).FirstOrDefault();
 

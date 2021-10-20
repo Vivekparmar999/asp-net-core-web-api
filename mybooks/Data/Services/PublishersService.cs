@@ -57,7 +57,7 @@ namespace mybooks.Data.Services
 
             //Paging 
             //By default 1 page contain 3 items
-            int pageSize = 3;
+            int pageSize = 5;
             allPublishers = PaginatedList<Publisher>.Create(allPublishers.AsQueryable(), pageNUmber ?? 1, pageSize);
             return allPublishers;
         }
@@ -65,12 +65,17 @@ namespace mybooks.Data.Services
 
         public PublisherwithBooksandAuthorsVM GetPublisherData(int publisherId) 
         {
+            //We get Publisher Data pass to PublisherwithBooksandAuthorsVM
             var _publisherData = _context.Publishers.Where(n => n.Id == publisherId)
                 .Select(n => new PublisherwithBooksandAuthorsVM()
                 { 
+                    //We know publisher Name
                     Name = n.Name,
+                    //Publisher.book so passing book to BookAuthorVM
                     BookAuthors = n.Books.Select( n => new BookAuthorVM() {
+                        //We know Book Name
                               BookName = n.Title,
+                              //Book.authors.fullname
                               BookAuthors = n.Book_Authors.Select( n=> n.Author.FullName).ToList()
                     }).ToList()
                 }

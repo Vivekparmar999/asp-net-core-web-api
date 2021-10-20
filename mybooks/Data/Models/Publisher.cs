@@ -11,7 +11,7 @@ namespace mybooks.Data.Models
         public string Name { get; set; }
 
         //Navigation Properties
-
+        //Rel bet book & pub      Here only List<Book> Many rel
         public List<Book> Books { get; set; }
 
     }

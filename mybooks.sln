@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "mybooks", "mybooks\mybooks.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "asp-net-web-api", "asp-net-web-api\asp-net-web-api.csproj", "{2FE2DAF6-A628-47AE-BCD0-EEEE073CB2B3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "my books tests", "my books tests\my books tests.csproj", "{3C650911-FC97-4DA0-B930-B7848FA295B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{2FE2DAF6-A628-47AE-BCD0-EEEE073CB2B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FE2DAF6-A628-47AE-BCD0-EEEE073CB2B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FE2DAF6-A628-47AE-BCD0-EEEE073CB2B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C650911-FC97-4DA0-B930-B7848FA295B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C650911-FC97-4DA0-B930-B7848FA295B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C650911-FC97-4DA0-B930-B7848FA295B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C650911-FC97-4DA0-B930-B7848FA295B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

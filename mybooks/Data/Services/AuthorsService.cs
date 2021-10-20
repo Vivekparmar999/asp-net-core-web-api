@@ -29,9 +29,13 @@ namespace mybooks.Data.Services
 
         public AuthorwithBooksVM GetAuthorWithBooks(int authorId) 
         {
+            //We want AuthorName & bookName
+            //Where() => we get author and pass in AuthorwithBooksVM
             var _author = _context.Authors.Where(n => n.Id == authorId).Select(n => new AuthorwithBooksVM()
             {
                 FullName = n.FullName,
+                // Map automatically  author<---Book_author--->book
+                
                 BookTitles = n.Book_Authors.Select(n => n.Book.Title).ToList()
             }).FirstOrDefault();
 

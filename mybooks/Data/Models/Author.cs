@@ -11,6 +11,7 @@ namespace mybooks.Data.Models
         public string FullName { get; set; }
 
         //Navigation Properties
+        //Rel bet Book <---book author---> author  List<BookAuthors>
         public List<Book_Author> Book_Authors { get; set; }
 
     }

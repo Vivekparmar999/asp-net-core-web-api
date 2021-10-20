@@ -11,6 +11,8 @@ namespace mybooks.Data.ViewModels
     public class BookVM
     {
 
+        //It take all Data of book , pub id, List<aut id>
+
         public string Title { get; set; }
 
         public string Description { get; set; }
